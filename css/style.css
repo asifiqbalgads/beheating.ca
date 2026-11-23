@@ -23,6 +23,24 @@
   19. Motion & responsive polish
    ===================================================================== */
 
+/* ---------- Self-hosted variable fonts (Manrope + Inter, latin) ---------- */
+@font-face{
+  font-family:"Manrope";
+  font-style:normal;
+  font-weight:200 800;
+  font-display:swap;
+  src:url("../assets/fonts/manrope-latin-var.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Inter";
+  font-style:normal;
+  font-weight:100 900;
+  font-display:swap;
+  src:url("../assets/fonts/inter-latin-var.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
 /* ---------- 1. Tokens & reset ---------- */
 :root{
   /* Brand palette extracted from the existing Breathe Easy logo */
@@ -92,6 +110,16 @@ blockquote{margin:0}
 address{font-style:normal}
 ::selection{background:var(--lime);color:var(--forest-950)}
 :focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:4px}
+
+.skip-link{
+  position:fixed;top:10px;left:10px;z-index:200;
+  padding:.7rem 1.1rem;border-radius:999px;
+  background:var(--forest-900);color:#fff;
+  font-size:.86rem;font-weight:600;
+  transform:translateY(-160%);
+  transition:transform .25s var(--ease);
+}
+.skip-link:focus-visible,.skip-link:focus{transform:translateY(0);outline:2px solid var(--lime);outline-offset:3px}
 
 .i{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .i--arrow{transition:transform .3s var(--ease)}
@@ -449,16 +477,18 @@ h3{font-size:1.02rem;line-height:1.3;font-weight:700;letter-spacing:-.012em}
 }
 .service-item__desc{display:block;margin-top:.2rem;font-size:.86rem;line-height:1.5;color:#5d6d63}
 .service-item__thumb{
-  width:64px;height:52px;border-radius:10px;object-fit:cover;flex:none;
+  width:76px;height:60px;border-radius:12px;object-fit:cover;flex:none;
   border:1px solid #dcdacf;
 }
-.service-item__arrow{color:#9aa79f;width:18px;height:18px;justify-self:end;transition:transform .3s var(--ease),color .25s var(--ease)}
+.service-item__arrow{display:none;color:#9aa79f;width:18px;height:18px;justify-self:end;transition:transform .3s var(--ease),color .25s var(--ease)}
 .service-item__link:hover .service-item__title,
 .service-item.is-active .service-item__title{color:var(--green-dark)}
 .service-item__link:hover .service-item__num,
 .service-item.is-active .service-item__num{color:var(--lime)}
 .service-item__link:hover .service-item__arrow{transform:translateX(4px);color:var(--green-dark)}
-.service-item.is-active .service-item__link{background:linear-gradient(90deg,rgba(143,195,31,.1),transparent 70%)}
+@media (hover:hover) and (pointer:fine){
+  .service-item.is-active .service-item__link{background:linear-gradient(90deg,rgba(143,195,31,.1),transparent 70%)}
+}
 
 .service-panel{display:none}
 .service-panel__frame{
@@ -576,7 +606,7 @@ h3{font-size:1.02rem;line-height:1.3;font-weight:700;letter-spacing:-.012em}
 .reviews__slider{min-width:0}
 .slider{
   display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;
-  scroll-behavior:smooth;padding-bottom:6px;
+  scroll-behavior:smooth;padding-bottom:6px;align-items:flex-start;
   scrollbar-width:none;-ms-overflow-style:none;
 }
 .slider::-webkit-scrollbar{display:none}
@@ -731,9 +761,7 @@ h3{font-size:1.02rem;line-height:1.3;font-weight:700;letter-spacing:-.012em}
   border-top:1px solid rgba(255,255,255,.12);
   font-size:.78rem;color:rgba(255,255,255,.45);
 }
-.footer__meta{display:flex;flex-wrap:wrap;gap:.4rem .9rem}
-.footer__meta li{position:relative}
-.footer__meta li + li::before{content:"·";position:absolute;left:-.55rem;color:rgba(255,255,255,.3)}
+.footer__meta{display:flex;flex-wrap:wrap;gap:.35rem 1.35rem}
 
 /* ---------- 18. Floating actions ---------- */
 .action-bar{
@@ -835,8 +863,8 @@ html.js .reveal.is-in{opacity:1;transform:none}
   .hero__inner{grid-template-columns:1.1fr .9fr;align-items:center;gap:clamp(40px,4.5vw,64px)}
   h1{font-size:clamp(2.6rem,5vw,4.5rem);line-height:.99}
   .hero__figure{aspect-ratio:4/5}
-  .hero__figure img{object-position:44% 52%}
-  .hero__trust{gap:.7rem 1.5rem}
+  .hero__figure img{object-position:68% 52%}
+  .hero__trust{gap:.6rem 1.15rem;font-size:.8rem}
 
   .about__grid{grid-template-columns:1.02fr 1fr;align-items:center}
   .about__media{padding-right:1.5rem}
@@ -849,6 +877,7 @@ html.js .reveal.is-in{opacity:1;transform:none}
   .service-panel{display:block;position:sticky;top:calc(var(--header-h) + 28px)}
   .service-item__link{grid-template-columns:auto 1fr auto;gap:1.2rem;padding:1.25rem 1rem 1.25rem 0}
   .service-item__thumb{display:none}
+  .service-item__arrow{display:block}
   .service-item__title{font-size:1.22rem}
   .service-item__desc{font-size:.88rem;max-width:44ch}
   .service-item__num{padding-top:.5rem}

@@ -36,8 +36,9 @@ ready to host on GitHub Pages.
 | Cream | `#faf8f3` | Section backgrounds |
 
 **Typography:** [Manrope](https://fonts.google.com/specimen/Manrope) for display/headings and
-[Inter](https://fonts.google.com/specimen/Inter) for body copy — both loaded from Google Fonts with
-`display=swap` and a system-font fallback.
+[Inter](https://fonts.google.com/specimen/Inter) for body copy. Both are self-hosted as latin-subset
+variable WOFF2 files in `assets/fonts/` (no third-party font requests, `font-display: swap`, system
+fallback stack).
 
 ---
 
@@ -51,6 +52,7 @@ ready to host on GitHub Pages.
 ├── js/
 │   └── script.js               # Nav, services panel, accordion, slider, scroll reveal
 ├── assets/
+│   ├── fonts/                  # Self-hosted Manrope + Inter (variable WOFF2)
 │   ├── images/                 # Optimised WebP photography (hero, services, work mosaic)
 │   └── logo/                   # Logo lockup + favicons
 ├── .nojekyll                   # Tells GitHub Pages to serve files as-is
